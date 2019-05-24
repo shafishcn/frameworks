@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.shafish.cicada.mapper.CicadasavedMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.shafish.cicada.entity.CicadasavedDao">
+        <id column="id" property="id" />
+        <result column="userId" property="userId" />
+        <result column="contentId" property="contentId" />
+    </resultMap>
+    
+    <!-- idResultMap -->
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, userId, contentId
+    </sql>
+    <select id="isSaved" parameterType="Map" resultMap="BaseResultMap" resultType="cn.shafish.cicada.entity.CicadasavedDao">
+        select
+			<include refid="Base_Column_List" />
+		from
+			cicadasaved c
+        <where>
+        	<if test="userId!=null">and c.userId=#{userId}</if>
+        	<if test="contentId!=null">and c.contentId=#{contentId}</if>
+        </where>
+    </select>
+    
+    <select id="getContentId" resultType="java.lang.Integer">
+        select
+			contentId
+		from
+			cicadasaved
+        WHERE userId = #{userId}
+    </select>
+
+</mapper>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.shafish.cicada.mapper.CicadauserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.shafish.cicada.entity.CicadauserDao">
+        <id column="id" property="id" />
+        <result column="ccdname" property="ccdname" />
+        <result column="ccdpasswd" property="ccdpasswd" />
+        <result column="ccdavatar" property="ccdavatar" />
+        <result column="identifier" property="identifier" />
+        <result column="identitytype" property="identitytype" />
+        <result column="gender" property="gender" />
+        <result column="email" property="email" />
+        <result column="location" property="location" />
+        <result column="mark" property="mark" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,ccdname, ccdpasswd, ccdavatar, identifier, identitytype, gender, email, location, mark
+    </sql>
+    
+    <select id="selectByparams" parameterType="Map" resultMap="BaseResultMap" resultType="cn.shafish.cicada.entity.CicadacontentDao">
+        select
+			<include refid="Base_Column_List" />
+		from
+			cicadauser c
+        <where>
+        	<if test="userName!=null">and c.ccdname=#{userName}</if>
+        	<if test="phone!=null">and c.identifier=#{phone}</if>
+        	<if test="type!=null">and c.identitytype=#{type}</if>
+        	<if test="email!=null">and c.email=#{email}</if>
+        </where>
+    </select>
+    
+
+</mapper>
